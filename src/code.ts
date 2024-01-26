@@ -35,7 +35,7 @@ else
 finish()
 
 // Action for selected nodes
-function mainFunction(node) {
+function mainFunction(node: SceneNode | PageNode) {
   count++
 }
 

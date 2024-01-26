@@ -5,10 +5,18 @@
       "es6",
       "DOM"
     ],
-    "strict": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "allowJs": true,
+    "outDir": "./dist",
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/@figma"
-    ]
-  }
+    ],
+    "jsx": "react",
+    "moduleResolution": "node",
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
 }

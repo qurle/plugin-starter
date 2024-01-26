@@ -2,7 +2,7 @@
   "name": "Plugin name",
   "id": "000000000000000000",
   "api": "1.0.0",
-  "main": "code.js",
+  "main": "dist/code.js",
   "editorType": [
     "figma"
   ],
@@ -13,5 +13,5 @@
       "multipleSelection": true
     }
   ],
-  "ui": "ui.html"
+  "ui": "src/ui.html"
 }
