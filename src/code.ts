@@ -11,31 +11,23 @@ let count: number = 0
 
 figma.on("currentpagechange", cancel)
 
-// For networking purposes
-figma.showUI(__html__, { visible: false })
-const post = (k, v = 1, last = false) => figma.ui.postMessage({ k: k, v: v, last: last })
-figma.ui.onmessage = async (msg) => {
-  if (msg === "finished") // Real plugin finish (after server's last response)
-    figma.closePlugin()
-  else
-    console.log(msg)
-}
-
 // Main + Elements Check
-post("started")
 working = true
 selection = figma.currentPage.selection
+run()
 
-// Anything selected?
-if (selection.length)
-  for (const node of selection)
-    mainFunction(node)
-else
-  mainFunction(figma.currentPage)
-finish()
+async function run() {
+  // Anything selected?
+  if (selection.length)
+    for (const node of selection)
+      await mainFunction(node)
+  else
+    await mainFunction(figma.currentPage)
+  finish()
+}
 
 // Action for selected nodes
-function mainFunction(node: SceneNode | PageNode) {
+async function mainFunction(node: SceneNode | PageNode) {
   count++
 }
 
