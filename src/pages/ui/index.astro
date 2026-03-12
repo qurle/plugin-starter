@@ -1,0 +1,199 @@
+---
+import Button from '../components/Button.astro'
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Figma Plugin</title>
+	</head>
+
+	<body>
+		<div class="container">
+			<h1>Figma Plugin</h1>
+			<div class="section">
+				<h2>Plugin Controls</h2>
+
+				<label for="text-input">Enter text:</label>
+				<input
+					type="text"
+					id="text-input"
+					placeholder="Type something..."
+				/>
+
+				<label for="color-input">Select color:</label>
+				<input type="color" id="color-input" value="#0d66d0" />
+
+				<label for="size-select">Select size:</label>
+				<select id="size-select">
+					<option value="small">Small</option>
+					<option value="medium" selected>Medium</option>
+					<option value="large">Large</option>
+				</select>
+
+				<div class="button-group">
+					<Button id="apply-btn" variant="primary">Apply</Button>
+					<Button id="reset-btn" variant="secondary">Reset</Button>
+				</div>
+
+				<div class="status" id="status"></div>
+			</div>
+
+			<div class="section">
+				<h2>Information</h2>
+				<p style="font-size: 12px; line-height: 1.6; color: #666;">
+					This is your Figma plugin UI built with Astro and Vite.
+					Select elements on the canvas and use the controls above to
+					modify them.
+				</p>
+			</div>
+		</div>
+
+		<script>
+			const applyBtn = document.getElementById('apply-btn')
+			const resetBtn = document.getElementById('reset-btn')
+			const textInput = document.getElementById('text-input')
+			const colorInput = document.getElementById('color-input')
+			const sizeSelect = document.getElementById('size-select')
+			const statusEl = document.getElementById('status')
+
+			function updateStatus(message: string, success: boolean = false) {
+				statusEl.textContent = message
+				statusEl.className = 'status' + (success ? ' success' : '')
+			}
+
+			applyBtn?.addEventListener('click', () => {
+				const text = (textInput as HTMLInputElement).value
+				const color = (colorInput as HTMLInputElement).value
+				const size = (sizeSelect as HTMLSelectElement).value
+
+				parent.postMessage(
+					{
+						pluginMessage: {
+							type: 'apply',
+							text,
+							color,
+							size,
+						},
+					},
+					'*',
+				)
+
+				updateStatus('Applied!', true)
+				setTimeout(() => updateStatus(''), 2000)
+			})
+
+			resetBtn?.addEventListener('click', () => {
+				;(textInput as HTMLInputElement).value = ''
+				;(colorInput as HTMLInputElement).value = '#0d66d0'
+				;(sizeSelect as HTMLSelectElement).value = 'medium'
+				updateStatus('Reset!', true)
+				setTimeout(() => updateStatus(''), 2000)
+			})
+
+			window.addEventListener('message', (event: MessageEvent) => {
+				const message = event.data.pluginMessage
+				if (message?.type === 'status') {
+					updateStatus(message.text)
+				}
+			})
+		</script>
+	</body>
+</html>
+
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	body {
+		font-family:
+			-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+			'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+			sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		background: #f5f5f5;
+		padding: 16px;
+		color: #333;
+	}
+
+	.container {
+		max-width: 400px;
+		margin: 0 auto;
+	}
+
+	h1 {
+		font-size: 20px;
+		margin-bottom: 16px;
+		color: #1a1a1a;
+	}
+
+	.section {
+		background: white;
+		border-radius: 8px;
+		padding: 16px;
+		margin-bottom: 16px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	}
+
+	.section h2 {
+		font-size: 14px;
+		font-weight: 600;
+		margin-bottom: 12px;
+		color: #0d66d0;
+	}
+
+	label {
+		display: block;
+		font-size: 12px;
+		font-weight: 500;
+		margin-bottom: 8px;
+		color: #666;
+	}
+
+	input,
+	select {
+		width: 100%;
+		padding: 8px;
+		border: 1px solid #e0e0e0;
+		border-radius: 4px;
+		font-size: 12px;
+		margin-bottom: 12px;
+	}
+
+	input:focus,
+	select:focus {
+		outline: none;
+		border-color: #0d66d0;
+		box-shadow: 0 0 0 2px rgba(13, 102, 208, 0.1);
+	}
+
+	.button-group {
+		display: flex;
+		gap: 8px;
+	}
+
+	button {
+		flex: 1;
+	}
+
+	.status {
+		font-size: 12px;
+		padding: 12px;
+		background: #f0f4f8;
+		border-radius: 4px;
+		margin-top: 12px;
+		color: #666;
+		text-align: center;
+	}
+
+	.status.success {
+		background: #e6f2ff;
+		color: #0d66d0;
+	}
+</style>
