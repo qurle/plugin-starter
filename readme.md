@@ -2,6 +2,10 @@
 
 A starter template for building Figma plugins with **TypeScript**, **Astro**, and **Vite**. Contains everything you need to get started with a fully typed, modern plugin development setup.
 
+### Why Astro?
+
+I find [Astro](https://astro.build) a perfect tool for building simple web interfaces. Same vanila flavour + components. 
+
 ## **How to use**
 
 ### Quick start
@@ -20,22 +24,42 @@ Open console (`⌘⌥I` › Console) to see logs and errors.
 
 ### Remember to update
 
+There are some places where you'd want to fill in your plugin specific data like name and stuff:
+```
+assets/
+  ├── cover.png         # Add your icon
+  └── icon.png          # Add your cover
+src/
+  └── config.ts         # Edit messages
+readme.md               # Remove this guide and make a really cool description
+manifest.json           # Edit name, add generated ID on publish
+package.json            # Edit name, version, description, author, license
+```
 
 ### Project structure
+
 ```
+assets/
+  ├── cover.png         # Plugin cover (used in readme, you will need it on publish)
+  └── icon.png          # Plugin icon (used in readme, you will need it on publish)
 src/
+  ├── pages/            
+  │   └── index.astro   # Main plugin UI
+  ├── components/       # Reusable Astro components
   ├── code.ts           # Main plugin logic
-  └── ui/
-    ├── components/     # Reusable Astro components
-    └── index.astro     # Main plugin UI
+  ├── config.ts         # Your config and constants
+  └── helpers/          # Shared helpers and utilities
+readme.md               # Description 
 manifest.json           # Plugin name and configuration
 package.json            # NPM package info
+
 ```
+You probably won't need other files, it's mostly configuration files, demos and helpers. 
+
 
 ### Development workflow
-- **`npm run dev`** - Watches `src/code.ts` and rebuilds `dist/code.js` on changes
+- **`npm run dev`** - Watches `src/` and rebuilds `dist/` on changes
 - **`npm run build`** - Builds both plugin code and UI for production
-- Edit files in `src/` and changes will automatically rebuild
 
 ---
 

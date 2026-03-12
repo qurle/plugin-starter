@@ -4,7 +4,7 @@ export const SHOW_LOGS = true
 // Settings for UI window
 export const ui = {
 	width: 320,
-	height: 640,
+	height: 480,
 }
 
 // Messages for notifications when an action is successfully completed

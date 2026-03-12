@@ -1,10 +1,10 @@
-import { clearNotifications, notify, showFinishNotification } from './utils/notifications'
-import { c } from './utils/misc'
+import { clearNotifications, notify, showFinishNotification } from './helpers/notifications'
+import { c } from './helpers/misc'
 import { ui } from './config'
 
 let count: number = 0
 
-
+figma.on('currentpagechange', cancel)
 figma.showUI(__html__, { themeColors: true, width: ui.width, height: ui.height, })
 // Listen to messages from the UI
 figma.ui.onmessage = (msg) => {
@@ -14,20 +14,25 @@ figma.ui.onmessage = (msg) => {
 run()
 
 async function run() {
-  figma.on('currentpagechange', cancel)
   const selection = figma.currentPage.selection
 
-  // Anything selected?
-  if (selection.length)
-    for (const node of selection)
-      await mainFunction(node)
-  else
-    await mainFunction(figma.currentPage)
-  //finish()
+  if (!selection.length)
+    return
+
+  // Sending data to UI
+  figma.ui.postMessage({
+    type: 'selection',
+    data: {
+      selection,
+    }
+  })
+
+  for (const node of selection)
+    await handleNode(node)
 }
 
 // Action for selected nodes
-async function mainFunction(node: SceneNode | PageNode) {
+async function handleNode(node: SceneNode | PageNode) {
   c(node)
   count++
 }
@@ -35,7 +40,8 @@ async function mainFunction(node: SceneNode | PageNode) {
 // Planned finish
 function finish() {
   showFinishNotification(count)
-  figma.closePlugin()
+  // figma.closePlugin()
+  // (usually not needed for UI plugins)
 }
 
 // Forced interruption
