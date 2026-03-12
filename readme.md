@@ -41,7 +41,7 @@ package.json            # Edit name, version, description, author, license
 ```
 assets/
   ├── cover.png         # Plugin cover (used in readme, you will need it on publish)
-  └── icon.png          # Plugin icon (used in readme, you will need it on publish)
+  └── icon.png          # Plugin icon (you will need it on publish)
 src/
   ├── pages/            
   │   └── index.astro   # Main plugin UI
