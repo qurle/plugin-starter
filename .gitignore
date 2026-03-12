@@ -6,3 +6,12 @@ node_modules
 out/
 dist/
 code.js
+
+# Astro
+.astro
+
+# Typescript
+**/*.d.ts
+
+# DS Store
+.DS_STORE

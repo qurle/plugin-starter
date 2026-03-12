@@ -1,0 +1,52 @@
+---
+import Placeholder from '../components/Placeholder.astro'
+---
+
+<!doctype html>
+<html lang="en">
+	<body>
+		<Placeholder id="placeholder">Start something new</Placeholder>
+	</body>
+</html>
+<script>
+	// Elements
+	const placeholderEl = document.querySelector('#placeholder')
+
+	// Handle messages from main code
+	window.onmessage = async (event) => {
+		const type = event.data.pluginMessage.type
+		const data = event.data.pluginMessage.data
+		console.log(`Got ${type} message ↴`)
+		console.log(data)
+
+		switch (type) {
+			case 'selection':
+				const length = data.selection.length
+				placeholderEl.textContent = `Selected ${length} layer${length > 1 ? 's' : ''}`
+				break
+		}
+	}
+</script>
+
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	body {
+		height: 100%;
+		width: 100%;
+
+		font-family:
+			-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+			'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+			sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		background: #f5f5f5;
+		padding: 16px;
+		color: #333;
+	}
+</style>

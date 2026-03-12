@@ -2,18 +2,28 @@
   "name": "plugin-name",
   "version": "1.0.0",
   "description": "insert your description",
-  "main": "code.js",
+  "main": "/dist/code/code.js",
+  "type": "module",
   "scripts": {
-    "build": "webpack",
-    "watch": "npm run build -- --watch"
+    "dev": "concurrently \"npm run watch:code\" \"npm run watch:ui\"",
+    "build": "npm run build:ui && npm run build:code",
+    "watch:code": "vite build --watch",
+    "build:code": "vite build",
+    "watch:ui": "chokidar 'src/**/*.astro' 'src/**/*.ts' 'src/**/*.css' '!src/code.ts' -c 'npm run build:ui'",
+    "build:ui": "astro build"
   },
   "author": "your precious name",
   "license": "",
   "devDependencies": {
+    "@astrojs/check": "^0.5.10",
     "@figma/plugin-typings": "^1.87.0",
-    "ts-loader": "^9.5.1",
+    "@types/node": "^25.4.0",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "astro": "^4.1.1",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^9.2.1",
+    "terser": "^5.26.0",
     "typescript": "^5.3.3",
-    "webpack": "^5.90.0",
-    "webpack-cli": "^5.1.4"
+    "vite": "^5.1.0"
   }
 }
