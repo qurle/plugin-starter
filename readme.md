@@ -4,7 +4,7 @@ A starter template for building Figma plugins with **TypeScript**, **Astro**, an
 
 ### Why Astro?
 
-I find [Astro](https://astro.build) a perfect tool for building simple web interfaces. Same vanila flavour + components. 
+I find [Astro](https://astro.build) a perfect tool for building simple web interfaces. Same vanila flavour + components. And you can also use React, Vue and Svelte components inside! 
 
 ## **How to use**
 
