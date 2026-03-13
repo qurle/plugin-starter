@@ -13,7 +13,7 @@ I find [Astro](https://astro.build) a perfect tool for building simple web inter
 1. Install [Node.js](https://nodejs.org/en/download)
 2. Clone / download the repo 
 3. Run `npm i` in terminal to install dependencies
-4. Run `npm run dev` to rebuild plugin on each change
+4. Run `npm run dev` to keep plugin updated on each change
 
 ### Running plugin in Figma
 
